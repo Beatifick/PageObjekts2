@@ -9,7 +9,8 @@ import static com.codeborne.selenide.Selenide.$$;
 
 public class DashboardPage {
 
-    private final ElementsCollection cards = $$("[data-test-id]");
+    // Селектор всех карточек на странице
+    private ElementsCollection cards = $$(".list__item div");
 
     // Получение баланса карты
     public int getCardBalance(CardInfo card) {
@@ -25,12 +26,12 @@ public class DashboardPage {
     public TransferPage selectCardToTransfer(CardInfo card) {
         cards.findBy(Condition.attribute("data-test-id", card.getId()))
                 .shouldBe(Condition.visible)
-                .$("[data-test-id=action-deposit]")
+                .$("[data-test-id=action-deposit]") // кнопка "Пополнить"
                 .click();
         return new TransferPage();
     }
 
-    // Извлечение баланса из строки вида: "**** **** **** 0001, баланс: 11000 р."
+    // Извлечение баланса из строки вида: "**** **** **** 0001, баланс: 15000 р."
     private int extractBalance(String text) {
         String balanceStart = "баланс: ";
         String balanceFinish = " р.";

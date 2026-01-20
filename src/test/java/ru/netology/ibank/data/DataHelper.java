@@ -1,5 +1,7 @@
 package ru.netology.ibank.data;
 
+import lombok.Value;
+
 public class DataHelper {
 
     private DataHelper() {}
@@ -15,55 +17,34 @@ public class DataHelper {
 
     // ====== КАРТЫ ======
     public static CardInfo getFirstCard() {
-        return new CardInfo(
-                "92df3f1c-a033-48e6-8390-206f6b1f56c0",
-                "5559 0000 0000 0001"
-        );
+        return new CardInfo("92df3f1c-a033-48e6-8390-206f6b1f56c0", "5559 0000 0000 0001");
     }
 
     public static CardInfo getSecondCard() {
-        return new CardInfo(
-                "0f3f5c2a-249e-4c3d-8287-09f7a039391d",
-                "5559 0000 0000 0002"
-        );
+        return new CardInfo("0f3f5c2a-249e-4c3d-8287-09f7a039391d", "5559 0000 0000 0002");
     }
 
     // ====== DTO ======
+    @Value
     public static class AuthInfo {
-        private final String login;
-        private final String password;
-
-        public AuthInfo(String login, String password) {
-            this.login = login;
-            this.password = password;
-        }
-
-        public String getLogin() { return login; }
-        public String getPassword() { return password; }
+        String login;
+        String password;
     }
 
+    @Value
     public static class VerificationCode {
-        private final String code;
-
-        public VerificationCode(String code) { this.code = code; }
-        public String getCode() { return code; }
+        String code;
     }
 
+    @Value
     public static class CardInfo {
-        private final String id;
-        private final String number;
+        String id;
+        String number;
+    }
 
-        public CardInfo(String id, String number) {
-            this.id = id;
-            this.number = number;
-        }
-
-        public String getId() {
-            return id;   // возвращаем UUID карты как строку
-        }
-
-        public String getNumber() {
-            return number; // возвращаем номер карты
-        }
+    // ====== Метод для расчета суммы перевода ======
+    // Возвращает половину баланса карты списания
+    public static int calculateTransferAmount(int balanceFromCard) {
+        return balanceFromCard / 2; // можно брать 50% для теста
     }
 }
